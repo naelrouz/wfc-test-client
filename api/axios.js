@@ -1,5 +1,11 @@
 import axios from 'axios';
 
-export const HTTP = axios.create({
-  baseURL: `http://localhost:3000`
+const HTTP = axios.create({
+  baseURL: `http://localhost:3000`,
+  headers: {
+    'Cache-Control': 'no-cache'
+  },
 })
+
+
+export default HTTP;

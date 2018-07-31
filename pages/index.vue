@@ -15,7 +15,7 @@
       h3 icon Button: {{icoBtn}}
       h3 Switch: {{switchState}}
 
-      .errors
+      .errors(v-if="errors.length > 0")
         p errors:
         pre {{errors}}
 
@@ -23,8 +23,9 @@
 </template>
 
 <script>
-// import { http } from '../api/axios.js';
-import axios from 'axios';
+// import axios from 'axios';
+
+import http from '../api/axios.js';
 
 export default {
   data: () => ({
@@ -36,49 +37,67 @@ export default {
     errors: []
   }),
   methods: {
-    sendStatesToServer() {
-      const states = {
-        input: this.input,
-        btn: this.btn,
-        icoBtn: this.icoBtn,
-        switchState: this.switchState
-      };
+    // sendStatesToServer() {
+    //   const states = {
+    //     input: this.input,
+    //     btn: this.btn,
+    //     icoBtn: this.icoBtn,
+    //     switchState: this.switchState
+    //   };
 
-      // http.post('/states', {
-      //   body: states
-      // });
+    //   http
+    //     .post('/states', {
+    //       body: states
+    //     })
+    //     .then(response => {
+    //       console.log('states.post.res');
+    //     })
+    //     .catch(e => {
+    //       this.errors.push(e);
+    //     });
 
-      axios
-        .post(`http://localhost:3000/states/`, {
-          body: states
+    //   // axios
+    //   //   .post(`http://localhost:3000/states/`, {
+    //   //     body: states
+    //   //   })
+    //   //   .then(response => {})
+    //   //   .catch(e => {
+    //   //     this.errors.push(e);
+    //   //   });
+    // },
+    sendOneStateToServer(state) {
+      http
+        .post('/states', {
+          body: state
         })
-        .then(response => {})
+        .then(response => {
+          // console.log('states.post.res');
+        })
         .catch(e => {
           this.errors.push(e);
         });
-    },
-    sendOneStateToServer(state) {
-      http.post('/', {
-        body: state
-      });
     }
   },
   watch: {
     input(val) {
       console.log('input:', this.input);
-      this.sendStatesToServer();
+      // this.sendStatesToServer();
+      this.sendOneStateToServer({ input: this.input });
     },
     btn(val) {
       console.log('btn:', this.btn);
-      this.sendStatesToServer();
+      // this.sendStatesToServer();
+      this.sendOneStateToServer({ btn: this.btn });
     },
     icoBtn(val) {
       console.log('icoBtn:', this.icoBtn);
-      this.sendStatesToServer();
+      // this.sendStatesToServer();
+      this.sendOneStateToServer({ icoBtn: this.icoBtn });
     },
     switchState(val) {
       console.log('switchState:', this.switchState);
-      this.sendStatesToServer();
+      // this.sendStatesToServer();
+      this.sendOneStateToServer({ switch: this.switchState });
     }
   },
   mounted() {}
@@ -90,7 +109,8 @@ export default {
 <style lang="sass">
 .elements
   max-width: 480px;
-  margin: auto 60px;
+  margin: 60px auto;
+  padding: 10px;
   text-align: center;
   &__item
     margin: 10px auto
