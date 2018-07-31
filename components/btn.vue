@@ -20,6 +20,7 @@ export default {
 
 <style lang="sass">
 .btn
+  display: inline-block;
   cursor: pointer;
   height: 34px;
   width: auto;
