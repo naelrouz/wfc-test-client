@@ -24,7 +24,7 @@ export default {
   cursor: pointer;
   height: 34px;
   width: auto;
-  padding: auto 65px;
+  padding: 0 65px;
   border-radius: 20px;
   background: #fff;
   color: #000000;
